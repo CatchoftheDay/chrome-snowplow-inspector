@@ -23,6 +23,8 @@ export = {
                             'Import Bad Rows'),
                         m('a.button.is-outlined.is-small.control', { onclick: () => vnode.attrs.setModal('stream') },
                             'Stream Live Data'),
+                        m('a.button.is-outlined.is-small.control', { onclick: () => vnode.attrs.setModal('websocket') },
+                            'Stream Websocket Data'),
                         m('a.button.is-outlined.is-small.control', {
                             onclick: () => {
                                 const f = document.createElement('input') as HTMLInputElement;

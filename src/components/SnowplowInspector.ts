@@ -6,6 +6,7 @@ import Beacon = require('./Beacon');
 import LiveStreamModal = require('./LiveStreamModal');
 import Timeline = require('./Timeline');
 import Toolbar = require('./Toolbar');
+import WebsocketModal = require('./WebsocketModal');
 
 const spPattern = /^[^:]+:\/\/[^/?#;]+(\/[^/]+)*?\/(i\?(tv=|.*&tv=)|com\.snowplowanalytics\.snowplow\/tp2)/i;
 
@@ -101,6 +102,11 @@ const SnowplowInspector = () => {
                 setModal,
             }),
             m(LiveStreamModal, {
+                addRequests,
+                modal,
+                setModal,
+            }),
+            m(WebsocketModal, {
                 addRequests,
                 modal,
                 setModal,

@@ -397,4 +397,59 @@ const badToRequests = (data: string[]): har.Entry[] => {
     return entries;
 };
 
-export = {badToRequests, b64d, esToRequests, hash, hasMembers, nameType, copyToClipboard, thriftToRequest, tryb64};
+const wsToRequests = (events: object[]): har.Entry[] => {
+    return events.map((event) => {
+        return wsEventToRequests(event as { [esKeyName: string]: string }) as har.Entry;
+    });
+};
+
+const wsEventToRequests = (data: { [esKeyName: string]: string }): Partial<har.Entry> => {
+    const uri = new URL('https://websocket/i');
+    const reverseTypeMap: { [event: string]: string } = {
+        page_ping: 'Page Ping',
+        page_view: 'Pageview',
+        struct: 'Structured Event',
+        transaction: 'Transaction',
+        transaction_item: 'Transaction Item',
+        unstruct: 'Self-Describing Event',
+    };
+
+    for (const key in data) {
+        if (data.hasOwnProperty(key)) {
+            uri.searchParams.set(key, (data[key] as string));
+        }
+    }
+
+    return {
+        pageref: 'websocket',
+        request: {
+            bodySize: 0,
+            cookies: [],
+            headers: [],
+            headersSize: 0,
+            httpVersion: 'HTTP/1.1',
+            method: 'GET',
+            queryString: [],
+            url: uri.href,
+        },
+        response: {
+            bodySize: 0,
+            content: {
+                mimeType: 'text/html',
+                size: 0,
+                text: '',
+            },
+            cookies: [],
+            headers: [],
+            headersSize: 0,
+            httpVersion: 'HTTP/1.1',
+            redirectURL: '',
+            status: 200,
+            statusText: 'OK',
+        },
+        startedDateTime: new Date().toISOString(),
+    };
+};
+
+
+export = {badToRequests, b64d, esToRequests, hash, hasMembers, nameType, copyToClipboard, thriftToRequest, tryb64, wsToRequests};
