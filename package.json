@@ -43,6 +43,6 @@
     "tslint-eslint-rules": "*",
     "typescript": "*",
     "web-ext": "*",
-    "webpack": "^2.*"
+    "webpack": "^5.*"
   }
 }
